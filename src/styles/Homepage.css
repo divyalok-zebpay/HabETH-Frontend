@@ -1,0 +1,7 @@
+#homepage_div {
+  margin: 0.5rem auto;
+  width: 90%;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  border: 1px solid rgb(193, 216, 231);
+}

@@ -22,29 +22,16 @@ const badge = {
   fontSize: "12px",
 };
 
-export default function CompletedHabitsCard({
-  goal,
-  description,
-  duration,
-  completedOn,
-  status,
-}) {
+export default function HabitCard({ goal, description, duration, completedOn, status }) {
   return (
     <div style={container}>
       <div style={innerContainer}>
-        <Typography>{goal}</Typography>
-        {status === "COMPLETED" && completedOn && (
-          <div style={badge}>{`Completed ${completedOn}`}</div>
-        )}
-        {status === "ACTIVE" && (
-          <div style={{ ...badge, background: "rgb(235, 187, 0)" }}>Active</div>
-        )}
+        <Typography color="#ef5065" >{goal}</Typography>
+        {status === "COMPLETED" && completedOn && <div style={badge}>{`Completed ${completedOn}`}</div>}
+        {status === "ACTIVE" && <div style={{ ...badge, background: "rgb(235, 187, 0)" }}>Active</div>}
       </div>
       <div style={innerContainer}>
-        <Typography
-          variant="caption12"
-          style={{ maxWidth: "50%", textAlign: "left" }}
-        >
+        <Typography variant="caption12" style={{ maxWidth: "50%", textAlign: "left" }}>
           {description}
         </Typography>
         <Typography variant="caption14">Duration: {duration}</Typography>

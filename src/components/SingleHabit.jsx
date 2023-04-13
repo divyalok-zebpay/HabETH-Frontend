@@ -3,12 +3,13 @@ import { ethers } from "ethers";
 import { Hero, Typography, Loading } from "web3uikit";
 import HabitJournal from "./HabitJournal";
 import { useParams } from "react-router-dom";
+import { createHabitObjFromID } from "../utility/utility";
 
 const LOADING = "LOADING",
   DONE = "DONE",
   ERROR = "ERROR";
 
-const SingleHabit = ({ addJournal, getHabitById }) => {
+const SingleHabit = ({ contract, account, onConnect }) => {
   const { habitId } = useParams();
   const [status, setStatus] = React.useState(LOADING);
   const [habit, setHabit] = React.useState(null);
@@ -16,56 +17,32 @@ const SingleHabit = ({ addJournal, getHabitById }) => {
   const fetchHabit = React.useCallback(
     async (habitId) => {
       try {
-        setStatus(LOADING);
-        const response = await getHabitById(habitId);
-
-        const durationInSeconds =
-          response[5].toNumber() * response[6].toNumber();
-        let durationText = "1 day";
-        if (durationInSeconds >= 2629800) {
-          durationText = (durationInSeconds / 2629800).toFixed(1) + " months";
-        } else if (durationInSeconds >= 604800) {
-          durationText = (durationInSeconds / 604800).toFixed(1) + " weeks";
-        } else if (durationInSeconds >= 86400) {
-          durationText = (durationInSeconds / 86400).toFixed(1) + " days";
-        }
-        const habitObj = {
-          id: habitId,
-          goal: response[1],
-          description: response[2],
-          amount: ethers.utils.formatEther(response[4]),
-          duration: durationText,
-          status: response[7] ? "COMPLETED" : "ACTIVE",
-          successCount: response[8].toNumber(),
-          missedCount: response[9].toNumber(),
-        };
+        let habitObj = await createHabitObjFromID(contract, habitId); 
         setHabit(habitObj);
         setStatus(DONE);
       } catch (e) {
+        window.console.log("Error while fetching habit (singlehabit): ", e);
         setStatus(ERROR);
       }
     },
-    [getHabitById]
+    [habitId, account]
   );
 
   React.useEffect(() => {
-    if (habitId) {
-      // Call the API to get the habit
-      fetchHabit(habitId);
+    if (window.ethereum?.isConnected()) {
+      if (account && contract && habitId) {
+        fetchHabit(habitId);
+      } else {
+        onConnect();
+      }
     }
-  }, [habitId, fetchHabit]);
+  }, [habitId, account]);
 
   return (
     <div style={{ width: "500px", margin: "auto" }}>
       {status === DONE && habit && (
         <>
-          <Hero
-            style={{ margin: "1rem" }}
-            align="right"
-            backgroundColor="#F5F5F5"
-            padding="40px"
-            rounded="20px"
-          >
+          <Hero style={{ margin: "1rem" }} align="right" backgroundColor="#F5F5F5" padding="40px" rounded="20px" textColor="#ef5065">
             <React.Fragment>
               <div
                 style={{
@@ -77,7 +54,7 @@ const SingleHabit = ({ addJournal, getHabitById }) => {
               ></div>
               <Typography variant="h4">{habit.goal}</Typography>
               <div>
-                <Typography variant="caption16">I commit to: </Typography>
+                <Typography variant="caption15">I commit to: </Typography>
                 <Typography variant="caption14">{habit.description}</Typography>
               </div>
               <div
@@ -87,16 +64,16 @@ const SingleHabit = ({ addJournal, getHabitById }) => {
                   width: "100%",
                 }}
               >
-                <Typography variant="caption14">
-                  Successful Reports: {habit.successCount}
-                </Typography>
-                <Typography variant="caption14">
-                  Missed Reports: {habit.missedCount}
-                </Typography>
+                <Typography variant="caption14">Successful Reports: {habit.successCount}</Typography>
+                <Typography variant="caption14">Missed Reports: {habit.missedCount}</Typography>
               </div>
             </React.Fragment>
           </Hero>
-          <HabitJournal addJournal={addJournal} habitId={habitId} />
+          {
+            habit.status != "ACTIVE"
+            ? <p>Can't submit report for this habit! <br></br><br></br> STATUS: <span style={{color: habit.status == "PENDING" ? "Orange" : "Red"}}>{habit.status}</span></p>
+            : <HabitJournal contract={contract} habitId={habitId} />
+          }
         </>
       )}
       {status === LOADING && (
