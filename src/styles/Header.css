@@ -1,0 +1,24 @@
+#home_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+#home_header_right {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  gap: 20px;
+  align-items: center;
+}
+
+#header_profile_img {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+#header_profile_link {
+  display: flex;
+}

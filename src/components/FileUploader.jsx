@@ -9,13 +9,7 @@ export default function FileUploader({ images, setImages }) {
     const newIpfs = ipfsHttpClient({
       url: `${process.env.REACT_APP_IPFS_API_ENDPOINT}api/v0`,
       headers: {
-        Authorization:
-          "Basic " +
-          window.btoa(
-            process.env.REACT_APP_IPFS_PROJECT_ID +
-              ":" +
-              process.env.REACT_APP_IPFS_API_KEY_SECRET
-          ),
+        Authorization: "Basic " + window.btoa(process.env.REACT_APP_IPFS_PROJECT_ID + ":" + process.env.REACT_APP_IPFS_API_KEY_SECRET),
       },
     });
     setipfs(newIpfs);
@@ -66,7 +60,7 @@ export default function FileUploader({ images, setImages }) {
         {ipfs && (
           <form onSubmit={onSubmitHandler}>
             <input type="file" name="file" />
-            <button type="submit">Upload file</button>
+            <button type="submit" style={{cursor: "pointer"}}>Upload file</button>
           </form>
         )}
       </div>

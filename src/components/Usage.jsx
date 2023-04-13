@@ -34,8 +34,7 @@ const HowToUse = ({ onConnect }) => {
             content: (
               <div>
                 <p>
-                  Add your goal, duration, accountability partner, amount to be
-                  staked, and the reporting interval.
+                  Add your goal, duration, accountability partner, amount to be staked, and the reporting interval.
                   <br />
                 </p>
               </div>
@@ -49,14 +48,10 @@ const HowToUse = ({ onConnect }) => {
           {
             content: (
               <p>
-                Report whether you completed the habit or not for a particular
-                interval. This will be verified by your accountability partner.
-                Your amount is deducted if: <br />
-                1) You report that you were unsuccessful; or <br /> 2) Your
-                accountability partner reports that you were unsuccessful; or{" "}
-                <br />
-                3) You fail to make a required report by the end of the day
-                (11:59 P.M.) of a required reporting day.
+                Report whether you completed the habit or not for a particular interval. This will be verified by your accountability partner. Your
+                amount is deducted if: <br />
+                1) You report that you were unsuccessful; or <br /> 2) Your accountability partner reports that you were unsuccessful; or <br />
+                3) You fail to make a required report by the end of the day (11:59 P.M.) of a required reporting day.
               </p>
             ),
             title: "Journal Progress",

@@ -1,0 +1,58 @@
+.habit_card {
+  border-radius: 2px;
+  box-shadow: -0.2px 1.5px 1.5px 1px #f494a0;
+  width: 80%;
+  padding: 20px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.habit_card > * {
+  margin-top: 10px;
+}
+.habit_card_bottom {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.habit_card_bottom a {
+  text-decoration: none;
+  color: #eb6d7e;
+}
+.habit_card_bottom span {
+  color: rgb(75, 75, 220);
+}
+.habit_card_top {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.habit_card_buttons {
+  display: flex;
+  gap: 20px;
+}
+.habit_card_buttons button {
+  padding: 6px 14px;
+  cursor: pointer;
+  border-radius: 2px;
+  border: none;
+  font-family: 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.habit_card_buttons button:nth-of-type(1) {
+  background-color: #eb6d7e;
+}
+.habit_card_buttons button:nth-of-type(1):hover {
+  background-color: #f08d9a;
+}
+.habit_card_buttons button:nth-of-type(2) {
+  background-color: rgb(166, 162, 162);
+}
+.habit_card_buttons button:nth-of-type(2):hover {
+  background-color: rgb(199, 196, 196)
+}
+
